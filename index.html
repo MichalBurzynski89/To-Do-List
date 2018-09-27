@@ -12,20 +12,118 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
+
+    <style>
+        .list-group-item {
+            position: relative;
+            padding-right: 20%;
+        }
+
+        .icons {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+        }
+        
+        i {
+            font-size: 1.5rem;
+        }
+
+        i.fa-check-circle {
+            margin-right: 1rem;
+            color: #26a142;
+            cursor: pointer;
+        }
+
+        i.fa-trash-alt {
+            color: #d53342;
+            cursor: pointer;
+        }
+
+        @media (max-width: 575.98px) {
+            html {
+                font-size: .75rem;
+            }
+
+            i.fa-check-circle {
+                margin-right: .5rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
     <div class="container">
         <div class="row">
-            <h1 class="col-12 display-3 font-weight-bold text-white text-center my-5">To-Do List</h1>
-            <form class="form-inline col-12 justify-content-center">
-                <input type="text" placeholder="Enter any task..." id="task" class="col-8 form-control form-control-lg">
-                <button type="submit" id="add" class="btn btn-warning btn-lg ml-1">
-                    <i class="fas fa-plus-square" style="font-size: 1.5rem"></i>
-                </button>
-            </form>
+            <div class="col-12">
+                <h1 class="display-3 font-weight-bold text-white text-center my-5">
+                    To-Do List
+                </h1>
+                <form id="taskInputForm" class="form-inline justify-content-center">
+                    <input type="text" placeholder="Enter any task..." id="taskInput" class="col-8 form-control form-control-lg">
+                    <button type="submit" class="btn btn-warning btn-lg ml-1">
+                        <i class="fas fa-plus-square"></i>
+                    </button>
+                </form>
+
+                <div class="card bg-danger my-5">
+                    <h5 class="card-header text-center text-white font-weight-bold py-3">
+                        Uncompleted (tasks to be done)
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">A
+                            <span class="icons">
+                                <i class="far fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                        <li class="list-group-item">B
+                            <span class="icons">
+                                <i class="far fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                        <li class="list-group-item">C
+                            <span class="icons">
+                                <i class="far fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card bg-success mb-5">
+                    <h5 class="card-header text-center text-white font-weight-bold py-3">
+                        Completed (tasks you've already done)
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">A
+                            <span class="icons">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                        <li class="list-group-item">B
+                            <span class="icons">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                        <li class="list-group-item">C
+                            <span class="icons">
+                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
     </div>
+
+    <script src="js/main.js"></script>
 </body>
 
 </html>
