@@ -1,10 +1,13 @@
+const inputField = document.getElementById('taskInput');
+inputField.focus();
+
+const uncompletedList = document.querySelector('.bg-danger');
+const completedList = document.querySelector('.bg-success');
+
 const tasksList = {
     uncompleted: [],
     completed: []
 };
-
-const inputField = document.getElementById('taskInput');
-inputField.focus();
 
 document.getElementById('taskInputForm').addEventListener('submit', addTask);
 
@@ -13,42 +16,51 @@ function addTask(e) {
     const taskContent = inputField.value;
     if (taskContent) {
         if (!tasksList.uncompleted.length) {
-            createTodoList(taskContent);
-        } else {
-            const task = document.createElement('li');
-            const buttons = document.createElement('span');
-            const btnComplete = document.createElement('i');
-            const btnRemove = document.createElement('i');
-
-            task.className = 'list-group-item';
-            task.textContent = taskContent;
-            buttons.className = 'icons';
-            btnComplete.className = 'far fa-check-circle';
-            btnRemove.className = 'fas fa-trash-alt';
-
-            buttons.appendChild(btnComplete);
-            buttons.appendChild(btnRemove);
-            task.appendChild(buttons);
-            document.querySelector('.bg-danger ul.list-group').appendChild(task);
+            uncompletedList.classList.remove('d-none');
         }
-        tasksList.uncompleted.push(taskContent);
+        addTaskToProperList(taskContent);
+        inputField.value = '';
     }
-    inputField.value = '';
     inputField.focus();
 }
 
-function createTodoList(value) {
-    const output = `<div class="card bg-danger mt-5">
-                        <h5 class="card-header text-center text-white font-weight-bold py-3">
-                             Uncompleted (tasks to be done)
-                        </h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">${value}
-                                <span class="icons">
-                                    <i class="far fa-check-circle"></i><i class="fas fa-trash-alt"></i>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>`;
-    document.querySelector('div.col-lg-9.mx-auto').innerHTML = output;
+function addTaskToProperList(task, completed) {
+    const list = completed ? completedList.childNodes[3] : uncompletedList.childNodes[3];
+    const listItem = document.createElement('li');
+    const buttons = document.createElement('span');
+    const btnComplete = document.createElement('i');
+    const btnRemove = document.createElement('i');
+
+    listItem.className = 'list-group-item';
+    listItem.textContent = task;
+    buttons.className = 'icons';
+    btnComplete.className = completed ? 'fas fa-check-circle' : 'far fa-check-circle';
+    btnRemove.className = 'fas fa-trash-alt';
+
+    btnComplete.addEventListener('click', addToCompleted);
+    // btnRemove.addEventListener('click', removeTask);
+
+    buttons.appendChild(btnComplete);
+    buttons.appendChild(btnRemove);
+    listItem.appendChild(buttons);
+    list.appendChild(listItem);
+
+    if (task === inputField.value) {
+        tasksList.uncompleted.push(task);
+        console.log(tasksList);
+    } else {
+        if (!tasksList.completed.length) completedList.classList.remove('d-none');
+        tasksList.uncompleted.splice(tasksList.uncompleted.indexOf(task), 1);
+        tasksList.completed.push(task);
+        console.log(tasksList);
+    }
+}
+
+function addToCompleted() {
+    const task = this.parentNode.parentNode;
+    if (task.parentNode.parentNode === uncompletedList) {
+        addTaskToProperList(task.textContent, true);
+        uncompletedList.childNodes[3].removeChild(task);
+        if (!tasksList.uncompleted.length) uncompletedList.classList.add('d-none');
+    }
 }
